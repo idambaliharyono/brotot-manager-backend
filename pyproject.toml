@@ -4,4 +4,13 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "cloudinary>=1.44.1",
+    "dotenv>=0.9.9",
+    "fastapi>=0.119.0",
+    "pillow>=11.3.0",
+    "pydantic>=2.12.2",
+    "python-multipart>=0.0.20",
+    "supabase>=2.22.0",
+    "uvicorn>=0.37.0",
+]
