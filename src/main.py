@@ -12,9 +12,17 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 from supabase import create_client, Client
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+load_dotenv()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 load_dotenv()
 supabaseUrl= os.getenv('SUPABASE_URL')
@@ -32,13 +40,17 @@ class LoginRequest(BaseModel):
 
 @app.post("/login")
 def login(request: LoginRequest):
-    load_dotenv()
     username = os.getenv("USERNAME")
     password = os.getenv("PASSWORD")
 
-    if request.username != username or request.password != password:
+    print("request_username:", request.username)
+    print('request password:', request.password)
+    print('username should be:', username)
+    print('password should be:', password)
+    if str(request.username) != str(username) or str(request.password) != str(password):
         raise HTTPException(status_code=401, detail="invalid username or password")
-    return {"message": "Login Successful", "user": "Mr. Idam"}
+
+    return {"message": "Login Successful", "user": username}
     
 @app.get("/ping")
 def ping():
